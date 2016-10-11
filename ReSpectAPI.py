@@ -49,6 +49,7 @@ def main(accessionID):
 	except urllib.error.HTTPError as e:
 		content = e.read()
 		print(content)
+		return False
 
 def listToString(list):
 	string = ""
