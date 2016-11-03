@@ -1,27 +1,23 @@
 import urllib
-import json
 import requests
 import sys
 import re
 from html.parser import HTMLParser
-from bs4 import BeautifulSoup
 
-global list
-list = []
-#Straight copying from Python doc
+#Inherited from Python built-in class 
 class MyHTMLParser(HTMLParser):
-    def handle_starttag(self, tag, attrs):
-    	pass
+	def __init__(self, list):
+		HTMLParser.__init__(self)
+		self.list = list
+	def handle_data(self, data):
+		if data.isspace() == False:
+			self.list.append(data.strip())
+	def getList(self):
+		return self.list
 
-    def handle_endtag(self, tag):
-    	pass
-
-    def handle_data(self, data):
-    	if data.isspace() == False:
-    		list.append(data.strip())
-    		print("Encountered some data  :", data.strip())
-
-def main(accessionID):
+def search(accessionID):
+	dict={}
+	list = []
 	url = "http://spectra.psc.riken.jp/menta.cgi/respect/datail/datail?accession="
 	fullUrl = url + accessionID
 	request = urllib.request.Request(fullUrl)
@@ -33,17 +29,22 @@ def main(accessionID):
 		findTable = re.compile('<div id="details".*?>(.*?)</div>',re.S)
 		items = re.findall(findTable,data)
 		data = listToString(items)
-		#seems to work lol 
-		parser = MyHTMLParser()
+		parser = MyHTMLParser(list)
 		parser.feed(data)
-
-		inchiIndex = list.index("CH$  INCHI")
-		massIndex = list.index("CH$  EXACT_MASS")
-		pubchemIndex = list.index("PUBCHEM")
-		dict={}
-		dict["exactMass"] = list[massIndex+1]
-		dict["INCHI"] = list[inchiIndex+1]
-		dict["pubchemID"] = list[pubchemIndex+1]
+		parserList = parser.getList()
+		inchiIndex = parserList.index("CH$  INCHI")
+		massIndex = parserList.index("CH$  EXACT_MASS")
+		if "PUBCHEM" in parserList:
+			pubchemIndex = parserList.index("PUBCHEM")
+		else:
+			pubchemIndex = -1
+		dict["exactMass"] = parserList[massIndex+1]
+		dict["INCHI"] = parserList[inchiIndex+1]
+		if(pubchemIndex == -1):
+			dict["pubchemID"] = 'N/A'
+		else:
+			dict["pubchemID"] = parserList[pubchemIndex+1]
+		print(dict)
 		return dict
 
 	except urllib.error.HTTPError as e:
@@ -51,11 +52,14 @@ def main(accessionID):
 		print(content)
 		return False
 
-def listToString(list):
+def listToString(listToDo):
 	string = ""
-	for item in list:
+	for item in listToDo:
 		string = string + item
 	return string
+
+def main(accessionID):
+	search(accessionID)
 
 if __name__ == '__main__':
 	main(sys.argv[1])
