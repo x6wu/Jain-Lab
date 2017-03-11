@@ -1,0 +1,16 @@
+Bug in compare_fxns:
+Error Message
+{'output_folder': 'D:/ME/Jain Lab', 'mgf_input_folder': 'D:/ME/Jain Lab/Tian_MS2/Heart/C18_Pos', 'format_files_bool': True, 'project_name': 'test1', 'input_csv': 'D:/ME/Jain Lab/Tian_Heart_c18_pos_C18_posgnps_compound_hits_exact_masses.csv', 'gnps_submit_bool': False, 'LC_Column': 'C18', 'ion_mode': 'pos'}
+attempting automation
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "C:\Users\Xinyu Wu\AppData\Local\Programs\Python\Python35\lib\tkinter\__init__.py", line 1549, in __call__
+    return self.func(*args)
+  File "D:\workspace\Jain Lab\src\gui_tester.py", line 44, in submitForm
+    JainLab_MS2_Filter.ms2_processing(output_dict)
+  File "D:\workspace\Jain Lab\src\JainLab_MS2_Filter.py", line 160, in ms2_processing
+    hit_array = compare_fxns.list_dict_gen(hit_csv)
+  File "D:\workspace\Jain Lab\src\compare_fxns.py", line 259, in list_dict_gen
+    ID= feature['ID']
+KeyError: 'ID'
+{'UpdateWorkflowName': 'UPDATE-SINGLE-ANNOTATED-BRONZE', 'internalFilename': 'spec-00000.mgf', 'INCHI_AUX': 'N/A', 'Smiles': 'N/A', 'TIC_Query': '2.56E+07', 'MQScore': '0.946385', 'Compound_Name': 'Butyryl-L-carnitine', 'MassDiff': '0.000305176', 'LibraryName': 'lib-00020.mgf', 'CAS_Number': '25576-40-3', 'RT_Query': '52.6664', 'Organism': 'METLIN', 'INCHI': 'InChI=1S/C11H21NO4/c1-5-6-11(15)16-9(7-10(13)14)8-12(2,3)4/h9H,5-8H2,1-4H3/t9-/m1/s1', 'LibMZ': '232.154', 'pubchem_cid': '213144', 'synonyms': 'No pubchem synonyms', 'Pubmed_ID': 'N/A', 'Ion_Source': 'LC-ESI', 'SpecCharge': '0', 'l': 'Isolated', 'IonMode': 'Positive-20eV', 'Data_Collector': 'N/A', 'SpecMZ': '232.155', 'SpectrumID': 'CCMSLIB00000531065', 'ExactMass': '0', 'LibraryQualityString': 'Bronze', 'InChICode': 'none-found', 'check': 'Good', 'LMID': 'LMFA07070003', 'Library_Class': '3', 'tags': ' ', 'SharedPeaks': '7', 'cid_attempts': "['439829' '213144']", 'MZErrorPPM': '1.31454', 'Instrument': 'LC-ESI-QTOF', 'exact_mass': '231.147058', 'Adduct': 'M+H', 'Compound_Name_Used': 'Butyryl-L-carnitine', 'PI': 'Metlin', 'check_explanation': 'Good', 'Precursor_MZ': '232.154', 'InChIKey': 'QWYFHHGCZUCMBN-SECBINFHSA-N', '#Scan#': '107', 'SpectrumFile': 'Tian_Heart_c18_pos_C18_pos_filtered_100ppm.mgf', 'LipidMaps': 'LMFA07070003', 'Charge': '0'}
